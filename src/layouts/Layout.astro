@@ -1,0 +1,522 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  // title: string;
+  // file: string;
+  // url: string;
+  frontmatter: any;
+  entry: CollectionEntry<"notes">;
+  toc: CollectionEntry<"notes">[];
+}
+
+const { entry, toc = [], frontmatter } = Astro.props;
+const isIndex = toc[0] && entry?.slug === toc[0]?.slug;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{frontmatter.title ?? "notes"}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+      integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
+      crossorigin="anonymous"
+    />
+    <!-- <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script> -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.js"
+      integrity="sha384-tMzugJpfLv7v0f+KXzNMqNCC6sVzLMM3sCnZDgzy0lcO/0h3sAkEBg/URFcV0JpE"
+      crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+      integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+      crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("loaded");
+        // All of these are textords in math mode
+        const mathTextSymbols = '0123456789/@."';
+        for (let i = 0; i < mathTextSymbols.length; i++) {
+          const ch = mathTextSymbols.charAt(i);
+          katex.__defineSymbol("math", "custom", "textord", ch, ch);
+        }
+
+        // All of these are textords in text mode
+        const textSymbols = '0123456789!@*()-=+";:?/.,';
+        for (let i = 0; i < textSymbols.length; i++) {
+          const ch = textSymbols.charAt(i);
+          katex.__defineSymbol("text", "custom", "textord", ch, ch);
+        }
+
+        // All of these are textords in text mode, and mathords in math mode
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        for (let i = 0; i < letters.length; i++) {
+          const ch = letters.charAt(i);
+          katex.__defineSymbol("math", "custom", "mathord", ch, ch);
+          katex.__defineSymbol("text", "custom", "textord", ch, ch);
+        }
+
+        //   ◊; katex.__defineSymbol("math", "custom", "textord", "Q", "\u211A");
+        //   ◊; katex.__defineSymbol("text", "custom","textord", "Q", "\u211A");
+
+        //   katex.__defineSymbol("math", "custom", "textord", "ε", "\u03B5");
+        //   katex.__defineSymbol("text", "custom","textord", "ε", "\u03B5");
+
+        //   ◊; const customMetrics = {"32": [0, 0, 0, 0, 0.267578125], "160": [0, 0, 0, 0, 0.267578125], "65": [0.0, 0.68798828125, 0, 0, 0.716796875], "66": [0.0, 0.69189453125, 0, 0, 0.6787109375], "67": [0.01318359375, 0.703125, 0, 0, 0.763671875], "68": [0.0, 0.69384765625, 0, 0, 0.8115234375], "69": [0.0, 0.68798828125, 0, 0, 0.61669921875], "70": [0.0, 0.68798828125, 0, 0, 0.56884765625], "71": [0.01318359375, 0.703125, 0, 0, 0.79052734375], "72": [0.0, 0.689453125, 0, 0, 0.8349609375], "73": [0.0, 0.689453125, 0, 0, 0.3408203125], "74": [0.31201171875, 0.689453125, 0, 0, 0.31982421875], "75": [0.0, 0.689453125, 0, 0, 0.74365234375], "76": [0.0, 0.68798828125, 0, 0, 0.603515625], "77": [0.0, 0.68798828125, 0, 0, 0.94091796875], "78": [0.005859375, 0.68798828125, 0, 0, 0.8525390625], "79": [0.01318359375, 0.703125, 0, 0, 0.86376953125], "80": [0.0, 0.69580078125, 0, 0, 0.61962890625], "81": [0.208984375, 0.7021484375, 0, 0, 0.86181640625], "82": [0.01220703125, 0.69580078125, 0, 0, 0.69189453125], "83": [0.01318359375, 0.703125, 0, 0, 0.51953125], "84": [0.0, 0.7080078125, 0, 0, 0.73291015625], "85": [0.01318359375, 0.689453125, 0, 0, 0.81591796875], "86": [0.01318359375, 0.689453125, 0, 0, 0.73388671875], "87": [0.01318359375, 0.689453125, 0, 0, 1.11474609375], "88": [0.0, 0.68798828125, 0, 0, 0.78564453125], "89": [0.0, 0.68798828125, 0, 0, 0.7529296875], "90": [0.0, 0.68798828125, 0, 0, 0.7119140625], "97": [0.01318359375, 0.453125, 0, 0, 0.431640625], "98": [0.01318359375, 0.80322265625, 0, 0, 0.53564453125], "99": [0.01318359375, 0.453125, 0, 0, 0.45556640625], "100": [0.01318359375, 0.80322265625, 0, 0, 0.53173828125], "101": [0.01318359375, 0.453125, 0, 0, 0.45361328125], "102": [0.0, 0.8017578125, 0, 0, 0.3037109375], "103": [0.31201171875, 0.4541015625, 0, 0, 0.5595703125], "104": [0.0, 0.80322265625, 0, 0, 0.560546875], "105": [0.0, 0.68701171875, 0, 0, 0.28076171875], "106": [0.31201171875, 0.68701171875, 0, 0, 0.28076171875], "107": [0.0, 0.80322265625, 0, 0, 0.53466796875], "108": [0.0, 0.80322265625, 0, 0, 0.25390625], "109": [0.0, 0.47705078125, 0, 0, 0.8447265625], "110": [0.0, 0.47705078125, 0, 0, 0.56787109375], "111": [0.01318359375, 0.4541015625, 0, 0, 0.53955078125], "112": [0.30322265625, 0.47705078125, 0, 0, 0.5185546875], "113": [0.30322265625, 0.45703125, 0, 0, 0.53466796875], "114": [0.0, 0.453125, 0, 0, 0.388671875], "115": [0.01318359375, 0.453125, 0, 0, 0.333984375], "116": [0.01318359375, 0.51904296875, 0, 0, 0.31494140625], "117": [0.01318359375, 0.453125, 0, 0, 0.5478515625], "118": [0.01318359375, 0.4404296875, 0, 0, 0.5048828125], "119": [0.01318359375, 0.4404296875, 0, 0, 0.80078125], "120": [0.0, 0.4404296875, 0, 0, 0.49560546875], "121": [0.31201171875, 0.4404296875, 0, 0, 0.53662109375], "122": [0.0, 0.458984375, 0, 0, 0.44580078125], "48": [0.01318359375, 0.6728515625, 0, 0, 0.51171875], "49": [0.0, 0.6728515625, 0, 0, 0.51171875], "50": [0.0, 0.6728515625, 0, 0, 0.51171875], "51": [0.01318359375, 0.6728515625, 0, 0, 0.51171875], "52": [0.01806640625, 0.6728515625, 0, 0, 0.51171875], "53": [0.01318359375, 0.6728515625, 0, 0, 0.51171875], "54": [0.01318359375, 0.671875, 0, 0, 0.51171875], "55": [0.01318359375, 0.65283203125, 0, 0, 0.51171875], "56": [0.01318359375, 0.6728515625, 0, 0, 0.51171875], "57": [0.01220703125, 0.6728515625, 0, 0, 0.51171875], "33": [0.01318359375, 0.72900390625, 0, 0, 0.23779296875], "64": [0.216796875, 0.7021484375, 0, 0, 0.9716796875], "42": [-0.46923828125, 0.77783203125, 0, 0, 0.36083984375], "40": [0.255859375, 0.84619140625, 0, 0, 0.31689453125], "41": [0.255859375, 0.84619140625, 0, 0, 0.31689453125], "45": [-0.21484375, 0.2822265625, 0, 0, 0.44482421875], "61": [-0.19091796875, 0.4189453125, 0, 0, 0.51171875], "43": [-0.0859375, 0.52587890625, 0, 0, 0.51171875], "34": [-0.39794921875, 0.68798828125, 0, 0, 0.40673828125], "59": [0.14013671875, 0.4541015625, 0, 0, 0.2529296875], "58": [0.01318359375, 0.4541015625, 0, 0, 0.2529296875], "63": [0.01318359375, 0.69091796875, 0, 0, 0.37890625], "47": [0.01318359375, 0.708984375, 0, 0, 0.32373046875], "46": [0.01318359375, 0.11376953125, 0, 0, 0.2529296875], "44": [0.14013671875, 0.115234375, 0, 0, 0.2529296875]};
+        // fbb-regular.ttf
+        const customMetrics = {
+          "32": [0, 0, 0, 0, 0.267578125],
+          "160": [0, 0, 0, 0, 0.267578125],
+          "65": [0.0, 0.68798828125, 0, 0, 0.716796875],
+          "66": [0.0, 0.69189453125, 0, 0, 0.6787109375],
+          "67": [0.01318359375, 0.703125, 0, 0, 0.763671875],
+          "68": [0.0, 0.69384765625, 0, 0, 0.8115234375],
+          "69": [0.0, 0.68798828125, 0, 0, 0.61669921875],
+          "70": [0.0, 0.68798828125, 0, 0, 0.56884765625],
+          "71": [0.01318359375, 0.703125, 0, 0, 0.79052734375],
+          "72": [0.0, 0.689453125, 0, 0, 0.8349609375],
+          "73": [0.0, 0.689453125, 0, 0, 0.3408203125],
+          "74": [0.31201171875, 0.689453125, 0, 0, 0.31982421875],
+          "75": [0.0, 0.689453125, 0, 0, 0.74365234375],
+          "76": [0.0, 0.68798828125, 0, 0, 0.603515625],
+          "77": [0.0, 0.68798828125, 0, 0, 0.94091796875],
+          "78": [0.005859375, 0.68798828125, 0, 0, 0.8525390625],
+          "79": [0.01318359375, 0.703125, 0, 0, 0.86376953125],
+          "80": [0.0, 0.69580078125, 0, 0, 0.61962890625],
+          "81": [0.208984375, 0.7021484375, 0, 0, 0.86181640625],
+          "82": [0.01220703125, 0.69580078125, 0, 0, 0.69189453125],
+          "83": [0.01318359375, 0.703125, 0, 0, 0.51953125],
+          "84": [0.0, 0.7080078125, 0, 0, 0.73291015625],
+          "85": [0.01318359375, 0.689453125, 0, 0, 0.81591796875],
+          "86": [0.01318359375, 0.689453125, 0, 0, 0.73388671875],
+          "87": [0.01318359375, 0.689453125, 0, 0, 1.11474609375],
+          "88": [0.0, 0.68798828125, 0, 0, 0.78564453125],
+          "89": [0.0, 0.68798828125, 0, 0, 0.7529296875],
+          "90": [0.0, 0.68798828125, 0, 0, 0.7119140625],
+          "97": [0.01318359375, 0.453125, 0, 0, 0.431640625],
+          "98": [0.01318359375, 0.80322265625, 0, 0, 0.53564453125],
+          "99": [0.01318359375, 0.453125, 0, 0, 0.45556640625],
+          "100": [0.01318359375, 0.80322265625, 0, 0, 0.53173828125],
+          "101": [0.01318359375, 0.453125, 0, 0, 0.45361328125],
+          "102": [0.0, 0.8017578125, 0, 0, 0.3037109375],
+          "103": [0.31201171875, 0.4541015625, 0, 0, 0.5595703125],
+          "104": [0.0, 0.80322265625, 0, 0, 0.560546875],
+          "105": [0.0, 0.68701171875, 0, 0, 0.28076171875],
+          "106": [0.31201171875, 0.68701171875, 0, 0, 0.28076171875],
+          "107": [0.0, 0.80322265625, 0, 0, 0.53466796875],
+          "108": [0.0, 0.80322265625, 0, 0, 0.25390625],
+          "109": [0.0, 0.47705078125, 0, 0, 0.8447265625],
+          "110": [0.0, 0.47705078125, 0, 0, 0.56787109375],
+          "111": [0.01318359375, 0.4541015625, 0, 0, 0.53955078125],
+          "112": [0.30322265625, 0.47705078125, 0, 0, 0.5185546875],
+          "113": [0.30322265625, 0.45703125, 0, 0, 0.53466796875],
+          "114": [0.0, 0.453125, 0, 0, 0.388671875],
+          "115": [0.01318359375, 0.453125, 0, 0, 0.333984375],
+          "116": [0.01318359375, 0.51904296875, 0, 0, 0.31494140625],
+          "117": [0.01318359375, 0.453125, 0, 0, 0.5478515625],
+          "118": [0.01318359375, 0.4404296875, 0, 0, 0.5048828125],
+          "119": [0.01318359375, 0.4404296875, 0, 0, 0.80078125],
+          "120": [0.0, 0.4404296875, 0, 0, 0.49560546875],
+          "121": [0.31201171875, 0.4404296875, 0, 0, 0.53662109375],
+          "122": [0.0, 0.458984375, 0, 0, 0.44580078125],
+          "48": [0.01318359375, 0.6728515625, 0, 0, 0.51171875],
+          "49": [0.0, 0.6728515625, 0, 0, 0.51171875],
+          "50": [0.0, 0.6728515625, 0, 0, 0.51171875],
+          "51": [0.01318359375, 0.6728515625, 0, 0, 0.51171875],
+          "52": [0.01806640625, 0.6728515625, 0, 0, 0.51171875],
+          "53": [0.01318359375, 0.6728515625, 0, 0, 0.51171875],
+          "54": [0.01318359375, 0.671875, 0, 0, 0.51171875],
+          "55": [0.01318359375, 0.65283203125, 0, 0, 0.51171875],
+          "56": [0.01318359375, 0.6728515625, 0, 0, 0.51171875],
+          "57": [0.01220703125, 0.6728515625, 0, 0, 0.51171875],
+          "33": [0.01318359375, 0.72900390625, 0, 0, 0.23779296875],
+          "64": [0.216796875, 0.7021484375, 0, 0, 0.9716796875],
+          "42": [-0.46923828125, 0.77783203125, 0, 0, 0.36083984375],
+          "40": [0.255859375, 0.84619140625, 0, 0, 0.31689453125],
+          "41": [0.255859375, 0.84619140625, 0, 0, 0.31689453125],
+          "45": [-0.21484375, 0.2822265625, 0, 0, 0.44482421875],
+          "61": [-0.19091796875, 0.4189453125, 0, 0, 0.51171875],
+          "43": [-0.0859375, 0.52587890625, 0, 0, 0.51171875],
+          "34": [-0.39794921875, 0.68798828125, 0, 0, 0.40673828125],
+          "59": [0.14013671875, 0.4541015625, 0, 0, 0.2529296875],
+          "58": [0.01318359375, 0.4541015625, 0, 0, 0.2529296875],
+          "63": [0.01318359375, 0.69091796875, 0, 0, 0.37890625],
+          "47": [0.01318359375, 0.708984375, 0, 0, 0.32373046875],
+          "46": [0.01318359375, 0.11376953125, 0, 0, 0.2529296875],
+          "44": [0.14013671875, 0.115234375, 0, 0, 0.2529296875],
+        };
+        //   ◊; const customMetrics = {};
+        katex.__setFontMetrics("custom-Regular", customMetrics);
+        katex.__setFontMetrics("Math-Italic", customMetrics); // makeOrd turns all mathematics into "Math-Italic" regardless of requested font
+        katex.__setFontMetrics("AMS-Regular", customMetrics); // mathsym turns "custom" font into "ams"
+
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true },
+          ],
+          // • rendering keys, e.g.:
+          throwOnError: false,
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <nav>
+        {
+          !isIndex && toc[0] && (
+            <>
+              <a href={"/notes/" + toc[0].slug}>{toc[0].data.title}</a>
+              <ol>
+                {toc
+                  .filter((e) => e.data?.number && e.data?.title)
+                  .slice(0)
+                  .map((e) => (
+                    <li
+                      value={e.data.number ?? 0}
+                      class={e.slug === entry.slug ? "current" : ""}
+                    >
+                      <a href={"/notes/" + e.slug + "/"}>{e.data.title}</a>
+                    </li>
+                  ))}
+              </ol>
+            </>
+          )
+        }
+      </nav>
+      <div id="sidebar-placeholder"></div>
+
+      <main>
+        <h1>
+          {entry?.data.number ? entry.data.number + ". " : ""}{
+            entry?.data.title
+          }
+        </h1>
+        <!-- <h3>{entry.slug}</h3> -->
+        <slot />
+        {
+          isIndex && (
+            <ol class="toc">
+              {toc
+                .filter((e) => e.data?.number && e.data?.title)
+                .slice(0)
+                .map((e) => (
+                  <li value={e.data.number ?? 0}>
+                    <a href={"/notes/" + e.slug + "/"}>{e.data.title}</a>
+                  </li>
+                ))}
+            </ol>
+          )
+        }
+      </main>
+    </div>
+  </body>
+</html>
+<style lang="scss" is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+    --main-font: "fbb", serif;
+    --min-math-size: 12px;
+    --min-text-size: 15px;
+    --max-text-size: 22px;
+    --line-length: 30;
+    --sidebar-scale: 10;
+    --content-width: calc(var(--line-length) * 1em);
+    --sidebar-width: calc(var(--sidebar-scale) * 1em);
+    --width-1: calc(var(--line-length) + 3);
+    --width-2: calc(var(--line-length) + var(--sidebar-scale) + 5);
+    --width-3: calc(var(--line-length) + 2 * var(--sidebar-scale) + 7);
+    --tiny-breakpoint: calc(var(--width-1) * var(--min-text-size));
+    --small-breakpoint: calc(var(--width-2) * var(--min-text-size));
+    --medium-breakpoint: calc(var(--width-3) * var(--min-text-size));
+    --large-breakpoint: calc(var(--width-3) * var(--max-text-size));
+  }
+
+  $min-math-size: 12px;
+  $min-text-size: 15px;
+  $max-text-size: 22px;
+  $line-length: 30;
+  $sidebar-scale: 10;
+  $width-1: $line-length + 3;
+  $width-2: $line-length + $sidebar-scale + 5;
+  $width-3: $line-length + 2 * $sidebar-scale + 7;
+  $tiny-breakpoint: $width-1 * $min-text-size;
+  $small-breakpoint: $width-2 * $min-text-size;
+  $medium-breakpoint: $width-3 * $min-text-size;
+  $large-breakpoint: $width-3 * $max-text-size;
+
+  html {
+    box-sizing: border-box;
+    background: none;
+    font-family: var(--main-font);
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    line-height: 1.4;
+    width: 100%;
+  }
+
+  #container {
+    display: flex;
+    font-size: $max-text-size;
+    margin: 1em;
+    padding: 0;
+    gap: 2em;
+    // width: 100%;
+  }
+
+  nav {
+    height: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    width: var(--sidebar-width);
+    position: fixed;
+    // width: 100%;
+    // padding-right: 1em;
+    // margin-right: 0.5em;
+    > * {
+      // font-size: 0.75em;
+      // margin-right: 0.5em;
+    }
+  }
+
+  #sidebar-placeholder {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+  }
+
+  main {
+    align-content: start;
+    display: grid;
+    gap: 0 2em;
+    grid-template-columns: var(--content-width) var(--sidebar-width);
+    > :not(aside) {
+      grid-column: 1;
+    }
+  }
+
+  .katex {
+    font-size: 1em;
+  }
+  .katex {
+    .mathnormal,
+    .mathrm,
+    .custom-Regular,
+    .amsrm {
+      font-family: var(--main-font);
+    }
+  }
+
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  p {
+    margin-top: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  nav > ol,
+  .toc {
+    margin-top: 0;
+    padding-left: 0em;
+    counter-reset: item;
+    li {
+      // text-align: left;
+      display: block;
+      padding-left: 2em;
+      text-indent: 0em;
+      position: relative;
+      &:before {
+        content: counter(item) ". ";
+        counter-increment: item;
+        width: 2em;
+        position: absolute;
+        left: 0;
+        // display: inline-block;
+      }
+    }
+    li.current {
+      font-weight: 700;
+    }
+  }
+
+  nav > ol {
+    font-size: 0.75em;
+  }
+
+  ul {
+    margin-top: 0;
+  }
+
+  aside {
+    font-size: 0.75em;
+  }
+
+  // Directives
+
+  .stmt,
+  .soln {
+    border: solid #ccd8 1px;
+    border-width: 1px 1px 1px 3px;
+    padding: 0.3em 0.5em;
+    margin-bottom: 1em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+    margin-top: 0;
+
+    // + .soln {
+    //   border-width: 0px 1px 1px 3px;
+    //   margin-top: -1em;
+    // }
+  }
+
+  .stmt + .soln,
+  .soln + .soln {
+    border-width: 0px 1px 1px 3px;
+    margin-top: -1em;
+  }
+
+  .stmt:has(+ .soln) {
+  }
+
+  .stmt > * {
+    margin-bottom: 0.5em;
+  }
+
+  .stmt > *:last-child {
+    margin-bottom: 0.25em;
+  }
+
+  .soln > summary {
+    cursor: pointer;
+  }
+
+  aside {
+    border-top: solid #ccd 1px;
+    opacity: 0.75;
+    padding-top: 0.25em;
+    font-size: 0.75em;
+  }
+
+  /* Three columns, variable size. */
+  @media screen and (max-width: $large-breakpoint) {
+    body {
+      background: #d0ffd0;
+    }
+
+    #container {
+      font-size: calc(100vw / $width-3);
+      width: 100%;
+    }
+  }
+
+  /* Two columns, variable size. */
+  @media screen and (max-width: $medium-breakpoint) {
+    body {
+      background: #f0f0ff;
+    }
+
+    #container {
+      font-size: calc(100vw / $width-2);
+      // flex-direction: row;
+    }
+
+    nav {
+      //   ◊; position: fixed;
+    }
+
+    main {
+      grid-template-columns: minmax(0, 1fr);
+      //   ◊; margin-left: calc(var(--sidebar-width) + 2em);
+    }
+
+    // ◊; Insert asides into main content.
+    aside {
+      grid-column: 1;
+      > p {
+        position: inherit;
+      }
+    }
+  }
+
+  @media screen and (max-width: $small-breakpoint) {
+    body {
+      background: #c0f0ff;
+    }
+
+    #container {
+      font-size: calc(100vw / $width-1);
+      flex-direction: column;
+      width: auto;
+    }
+
+    nav {
+      position: relative;
+      width: auto;
+    }
+    #sidebar-placeholder {
+      display: none;
+    }
+
+    main {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: $tiny-breakpoint) {
+    #container {
+      font-size: $min-text-size;
+    }
+    body {
+      background: #fff0f0;
+    }
+  }
+</style>

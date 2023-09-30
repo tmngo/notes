@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const entries = await getCollection("notes");
+  entries.sort((a, b) => {
+    return (a.data.number ?? 0) - (b.data.number ?? 0);
+  });
+  return entries.map((entry) => {
+    const directory = entry.slug.split("/")[0];
+    return {
+      params: { slug: entry.slug },
+      props: {
+        entry,
+        toc: entries.filter(({ slug }) => slug.startsWith(directory)),
+      },
+    };
+  });
+}
+// 2. For your template, you can get the entry directly from the prop
+const { entry, toc, file, url } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout toc={toc} entry={entry} frontmatter={entry.data}>
+  <Content />
+</Layout>

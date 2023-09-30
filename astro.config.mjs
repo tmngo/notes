@@ -113,6 +113,7 @@ const aside = () => {
 // https://astro.build/config
 export default defineConfig({
   base: "notes",
+  outDir: "./docs",
   markdown: {
     remarkPlugins: [remarkDirective, note, stmt, soln, aside],
     smartypants: false,

@@ -5,33 +5,31 @@ title: Absolute value and sequences
 
 A key concept in analysis is absolute value, which measures closeness to zero.
 
-:::stmt[Definition 5.1]
+::::stmt[Definition 5.1]
 Let $x,y \in \mathbb Q$. We define the absolute value of $x$, denoted $|x|$ by
 
-$$
+:::math
 |x| := \begin{cases}
-x & \text{if}\ x > 0 \\
-0 & \text{if}\ x = 0 \\
+x & \text{if}\ x > 0 \\\\
+0 & \text{if}\ x = 0 \\\\
 -x & \text{if}\ x < 0
 \end{cases}
-$$
+:::
 
 By considering the four possible cases:
 
-$$
+:::math
 \begin{aligned}
-x,y \geq 0 && x,-y \geq 0 \\
--x,y \geq 0 && x,y \leq 0
+x,y \geq 0 & &x,-y &\geq 0 \\\\
+-x,y \geq 0 & &x,y &\leq 0
 \end{aligned}
-$$
+:::
 
 We can see that $|xy| = |x| \cdot |y|$ for all $x,y \in \mathbb Q.$ In particular, $|x| \geq 0$ for all $x \in \mathbb Q.$
 
-:::
+::::
 
-:::soln[x]
-
-wrath
+<!-- :::soln[x]
 
 $$
 |x| := \begin{cases}
@@ -41,7 +39,7 @@ x & if x > 0 \\
 \end{cases}
 $$
 
-:::
+::: -->
 
 :::stmt[Theorem 5.2]
 Theorem 5.2

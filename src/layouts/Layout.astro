@@ -30,24 +30,22 @@ const { BASE_URL } = import.meta.env;
       integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
       crossorigin="anonymous"
     />
-    <!-- <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script> -->
-    <script
+    <!-- <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+      integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx"
+      crossorigin="anonymous"></script> -->
+    <!-- <script
       defer
       src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.js"
       integrity="sha384-tMzugJpfLv7v0f+KXzNMqNCC6sVzLMM3sCnZDgzy0lcO/0h3sAkEBg/URFcV0JpE"
-      crossorigin="anonymous"></script>
-    <script
+      crossorigin="anonymous"></script> -->
+    <!-- <script
       defer
       src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
       integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-      crossorigin="anonymous"></script>
-    <!-- <script>
-      import { render } from "./render.ts";
-      document.addEventListener("DOMContentLoaded", () => {
-        render(katex, renderMathInElement);
-      });
-    </script> -->
-    <script defer src=`${BASE_URL}/render.js`></script>
+      crossorigin="anonymous"></script> -->
+    <!-- <script defer src=`${BASE_URL}/render.js`></script> -->
   </head>
   <body>
     <div id="container">
@@ -199,6 +197,11 @@ const { BASE_URL } = import.meta.env;
     > :not(aside) {
       grid-column: 1;
     }
+  }
+
+  p:has(> .katex:only-child) {
+    display: flex;
+    justify-content: center;
   }
 
   .katex {

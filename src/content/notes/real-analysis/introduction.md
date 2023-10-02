@@ -34,18 +34,20 @@ Here is an example of how useful mathematical induction can be.
 For every natural number $n$, we have that $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.
 :::
 
-:::soln[Proof]
+::::soln[Proof]
 For each natural number $n$, the statement we want to prove is $P_n$: “$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.” We proceed by induction on $n$. First we will prove that the base case $P_1$ is true. The statement $P_1$ reads $1 = \frac{1(1+1)}{2}$, which is true. Now, suppose that $P_n$ is true; in other words, suppose that $1 + 2 + \cdots + n = \frac{n(n+1)}{2}.$ Using this hypothesis, we want to prove the statement $P_{n+1}$. To achieve this, we add $n+1$ to both sides to obtain
 
-$$
+$$ \begin{aligned}1 + 2 + \cdots + n + (n+1) &= \frac{n(n+1)}{2} + n + 1 \\\\\frac{n(n+1) + 2(n+1)}{2} &= \frac{(n+1)((n+1)+1)}{2}.\end{aligned} $$
+
+<!-- $$
 \begin{aligned}
 1 + 2 + \cdots + n + (n+1) &= \frac{n(n+1)}{2} + n + 1 \\\\
 \frac{n(n+1) + 2(n+1)}{2} &= \frac{(n+1)((n+1)+1)}{2}.
 \end{aligned}
-$$
+$$ -->
 
 Thus $P_{n+1}$ is true if $P_n$ is true. By the principle of mathematical induction, $P_n$ holds for all natural numbers $n$.
-:::
+::::
 
 Note that we did not prove $P_n$ directly for any $n$ except for $n=1$. We just proved $P_1$, and we proved that if $P_1$ is true, so is $P_2$ (thus $P_2$ is true), and we proved that if $P_2$ is true, so is $P_3$ (thus $P_3$ is true), etc.
 

@@ -48,7 +48,7 @@ Let $S$ be a set of numbers. An order on $S$ is a relation, denoted by $<$, with
 
 - Trichotomy: If $x$ and $y$ are numbers in $S$, then exactly one of these statements is true:
 
-  $$ x < y, \qquad x + y, \qquad x > y. $$
+$$ x < y, \qquad x + y, \qquad x > y.$$
 
 - Transitivity: If $x$, $y$, and $z$ are numbers of $S$ such that $x < y$ and $y < z$, then $x < z$.
 
@@ -73,11 +73,11 @@ If $S$ is a set of numbers satisfying the addition axioms, and $x,y$ and $z$ are
 
 :::
 
-:::soln[Proof 1]
+::::soln[Proof 1]
 
 Suppose that $x+y = x+z.$ By A5 (inverse), there exists $(-x)$ in $S$ such that $x + (-x) = 0.$ Then, applying the addition axioms:
 
-$$
+:::math
 \begin{aligned}
 (x + y) + (-x) &= (x+z) + (-x) & &\text{Well-definedness}\\\\
 (-x) + (x+y) &= (-x) + (x+z) & &\text{Commutativity} \\\\
@@ -86,29 +86,29 @@ $$
 0+y &= 0+z & &\text{Inverse} \\\\
 y &= z & &\text{Identity}
 \end{aligned}
-$$
-
 :::
 
-:::soln[2]
+::::
+
+::::soln[2]
 
 Suppose that $x+y=x.$ By A4, there exists a number 0 in $S$ such that $0 + x = x.$
 
-$$
+:::math
 \begin{aligned}
 x + y &= 0 + x & &\text{Identity} \\\\
 x + y &= x + 0 & &\text{Commutativity} \\\\
 y &= 0 & &\text{Cancellation (1)}
 \end{aligned}
-$$
-
 :::
 
-:::soln[3]
+::::
 
-Suppose that $x+y=0.$ By A5, there exists $(-x)$ in $S$ such that $x + (-x) = 0.\$ Then, applying the addition axioms:
+::::soln[3]
 
-$$
+Suppose that $x+y=0.$ By A5, there exists $(-x)$ in $S$ such that $x + (-x) = 0.$ Then, applying the addition axioms:
+
+:::math
 \begin{aligned}
 (x + y) + (-x) &= 0 + (-x) & &\text{Well-definedness} \\\\
 (-x) + (x+y) &= 0 + (-x) & &\text{Commutativity} \\\\
@@ -117,22 +117,22 @@ $$
 0+y &= 0 + (-x) & &\text{Inverse} \\\\
 y &= -x & &\text{Identity}
 \end{aligned}
-$$
-
 :::
 
-:::soln[4]
+::::
+
+::::soln[4]
 By A5, there exists $(-x)$ in $S$ such that $x + (-x) = 0,$ and there exists $(-(-x))$ in $S$ such that $(-x) + (-(-x)) = 0.$
 
-$$
+:::math
 \begin{aligned}
 (-x) + (-(-x)) &= x + (-x) & &\text{Inverse} \\\\
 (-x) + (-(-x)) &= (-x) + x & &\text{Commutativity} \\\\
 -(-x) &= x & &\text{Cancellation}
 \end{aligned}
-$$
-
 :::
+
+::::
 
 :::stmt[Proposition 2.8]
 If $x$, $y$ and $z$ are integers, then:
@@ -145,41 +145,41 @@ If $x$, $y$ and $z$ are integers, then:
 
 :::
 
-:::soln[Proof]
+::::soln[Proof]
 
 1. By **A3** (commutativity), **A4** (identity), and **DL** (distributive),
 
-$$
+:::math
 \begin{aligned}
 0 + 0 \cdot x &= 0 \cdot x & &\text{Identity}\\\\
- &= (0 + 0) \cdot x & &\text{Identity}\\\\
-  &= 0 \cdot x + 0 \cdot x & &\text{Commutativity, DL} \\\\
+&= (0 + 0) \cdot x & &\text{Identity}\\\\
+&= 0 \cdot x + 0 \cdot x & &\text{Commutativity, DL} \\\\
 0 &= 0 \cdot x & &\text{Cancellation}
 \end{aligned}
-$$
+:::
 
 2. Using the result of Part 1 and Lemma 2.7.3 (the uniqueness of the additive inverse),
 
-$$
-  \begin{aligned}
-  (-x)y + xy &= ((-x) + x)y & &\text{DL}\\\\
-  &= 0y & &\text{Inverse}\\\\
-    &= 0 & &\text{Part 1} \\\\
-    (-x)y &= -(xy) & &\text{Uniqueness of inverse}
-  \end{aligned}
-$$
+:::math
+\begin{aligned}
+(-x)y + xy &= ((-x) + x)y & &\text{DL}\\\\
+&= 0y & &\text{Inverse}\\\\
+&= 0 & &\text{Part 1} \\\\
+(-x)y &= -(xy) & &\text{Uniqueness of inverse}
+\end{aligned}
+:::
 
 3.
 
-$$
-  \begin{aligned}
-  (-x)(-y) + (-xy) &=   (-x)(-y) + (-x)y & &\text{Part 2}\\\\
- &= (-x)((-y) + y) & &\text{DL}\\\\
-  &= (-x)\cdot 0 & &\text{Inverse}\\\\
-    &= 0 & &\text{Part 1} \\\\
-    (-x)(-y) &= xy & &\text{Uniqueness of inverse}
-  \end{aligned}
-$$
+:::math
+\begin{aligned}
+(-x)(-y) + (-xy) &= (-x)(-y) + (-x)y & &\text{Part 2}\\\\
+&= (-x)((-y) + y) & &\text{DL}\\\\
+&= (-x)\cdot 0 & &\text{Inverse}\\\\
+&= 0 & &\text{Part 1} \\\\
+(-x)(-y) &= xy & &\text{Uniqueness of inverse}
+\end{aligned}
+:::
 
 4. We will prove the contrapositive, that if $x \neq 0$ and $y\neq 0$, then $xy \neq 0$. We'll consider three cases for $x$ and $y$.
 
@@ -191,7 +191,7 @@ $$
 
 5. Suppose that $z \neq 0$ and $x \cdot z = y \cdot z$.
 
-$$
+:::math
 \begin{aligned}
 x \cdot z + -(x\cdot z) &= y \cdot z + -(x\cdot z) & &\text{Well-definedness}\\\\
 0 &= y \cdot z + -(x\cdot z) & &\text{Inverse}\\\\
@@ -200,6 +200,6 @@ x \cdot z + -(x\cdot z) &= y \cdot z + -(x\cdot z) & &\text{Well-definedness}\\\
 y &= -(-x) & &\text{Uniqueness of inverse} \\\\
 y &= x & &\text{Cancellation of }-
 \end{aligned}
-$$
-
 :::
+
+::::

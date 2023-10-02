@@ -11,10 +11,16 @@
   },
   "dependencies": {
     "astro": "^3.1.0",
+    "hast-util-to-text": "^4.0.0",
     "remark-directive": "^2.0.1",
-    "sass": "^1.68.0"
+    "sass": "^1.68.0",
+    "unist-util-visit-parents": "^6.0.1"
   },
   "devDependencies": {
-    "prettier-plugin-astro": "^0.12.0"
-  }
+    "hast-util-from-html-isomorphic": "^2.0.0",
+    "katex": "^0.16.8",
+    "prettier-plugin-astro": "^0.12.0",
+    "remark-math": "^6.0.0"
+  },
+  "types": "types/index.d.ts"
 }

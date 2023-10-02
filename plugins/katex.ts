@@ -1,5 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("loaded");
+import { fromHtmlIsomorphic } from "hast-util-from-html-isomorphic";
+import { toText } from "hast-util-to-text";
+import katex from "katex";
+import { SKIP, visitParents } from "unist-util-visit-parents";
+import type { KatexOptions } from "katex";
+import type { Element } from "hast";
+import type { Root } from "remark-directive";
+import type { VFile } from "vfile";
+
+type Options = Omit<KatexOptions, "displayMode" | "throwOnError">;
+
+const initializeCustomFont = () => {
+  console.log("Initializing custom font...");
   // All of these are textords in math mode
   const mathTextSymbols = '0123456789/@."';
   for (let i = 0; i < mathTextSymbols.length; i++) {
@@ -115,17 +126,121 @@ document.addEventListener("DOMContentLoaded", () => {
   katex.__setFontMetrics("custom-Regular", customMetrics);
   katex.__setFontMetrics("Math-Italic", customMetrics); // makeOrd turns all mathematics into "Math-Italic" regardless of requested font
   katex.__setFontMetrics("AMS-Regular", customMetrics); // mathsym turns "custom" font into "ams"
+};
 
-  renderMathInElement(document.body, {
-    // customised options
-    // • auto-render specific keys, e.g.:
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false },
-      { left: "\\(", right: "\\)", display: false },
-      { left: "\\[", right: "\\]", display: true },
-    ],
-    // • rendering keys, e.g.:
-    throwOnError: false,
-  });
-});
+initializeCustomFont();
+
+export const rehypeKatex = (options: Options) => {
+  const settings = options || {};
+
+  return (tree: Root, file: VFile) => {
+    visitParents(tree, "element", (element: Element, parents: Element[]) => {
+      if (!element) return;
+      const classes = Array.isArray(element?.properties?.className)
+        ? element.properties?.className ?? []
+        : [];
+      // This class can be generated from markdown with ` ```math `.
+      console.log({ ...element, classes });
+      const languageMath = classes.includes("language-math");
+      // This class is used by `remark-math` for flow math (block, `$$\nmath\n$$`).
+      const mathDisplay = classes.includes("math-display");
+      // This class is used by `remark-math` for text math (inline, `$math$`).
+      const mathInline = classes.includes("math-inline");
+      const myMath = classes.includes("my-math");
+      let displayMode = mathDisplay;
+
+      // Any class is fine.
+      if (!languageMath && !mathDisplay && !mathInline && !myMath) {
+        return;
+      }
+
+      let parent = parents[parents.length - 1];
+      let scope: Element = element;
+
+      // If this was generated with ` ```math `, replace the `<pre>` and use
+      // display.
+      if (
+        (element.tagName === "code" &&
+          languageMath &&
+          parent &&
+          parent.type === "element" &&
+          parent.tagName === "pre") ||
+        (element.tagName === "div" &&
+          myMath &&
+          parent &&
+          parent.type === "element" &&
+          parent.tagName === "pre")
+      ) {
+        scope = parent;
+        parent = parents[parents.length - 2];
+        displayMode = true;
+        console.log({ scope });
+      }
+
+      /* c8 ignore next -- verbose to test. */
+      if (!parent) return;
+      if (scope.properties === undefined) return;
+
+      const value = toText(scope as any, { whitespace: "pre" });
+
+      /** @type {Array<ElementContent> | string | undefined} */
+      let result;
+
+      try {
+        result = katex.renderToString(value, {
+          ...settings,
+          displayMode,
+          throwOnError: true,
+        });
+      } catch (error) {
+        const cause = error as Error;
+        const ruleId = cause.name.toLowerCase();
+
+        file.message("Could not render math with KaTeX", {
+          ancestors: [...parents, element],
+          cause,
+          place: element.position,
+          ruleId,
+          source: "rehype-katex",
+          type: element.type,
+        });
+
+        // KaTeX can handle `ParseError` itself, but not others.
+        if (ruleId === "parseerror") {
+          result = katex.renderToString(value, {
+            ...settings,
+            displayMode,
+            strict: "ignore",
+            throwOnError: false,
+          });
+        }
+        // Generate similar markup if this is an other error.
+        // See: <https://github.com/KaTeX/KaTeX/blob/5dc7af0/docs/error.md>.
+        else {
+          result = [
+            {
+              type: "element",
+              tagName: "span",
+              properties: {
+                className: ["katex-error"],
+                style: "color:" + (settings.errorColor || "#cc0000"),
+                title: String(error),
+              },
+              children: [{ type: "text", value }],
+            },
+          ];
+        }
+      }
+
+      if (typeof result === "string") {
+        const root = fromHtmlIsomorphic(result, { fragment: true });
+        // Cast as we don’t expect `doctypes` in KaTeX result.
+        result = /** @type {Array<ElementContent>} */ root.children;
+      }
+
+      const index = parent.children.indexOf(scope);
+      parent.children.splice(index, 1, ...(result as any));
+      return SKIP;
+    });
+  };
+};

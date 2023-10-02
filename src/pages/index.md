@@ -5,4 +5,4 @@ title: Notes
 
 # Notes
 
-## [Real analysis](./real-analysis/)
+## [Real analysis](/notes/real-analysis/)

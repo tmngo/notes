@@ -8,7 +8,7 @@ import remarkMath from "remark-math";
 export default defineConfig({
   site: "https://timngo.net",
   base: "/notes",
-  outDir: "./docs",
+  // outDir: "./docs",
   markdown: {
     // gfm: false,
     remarkPlugins: [

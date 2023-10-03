@@ -37,7 +37,9 @@ For every natural number $n$, we have that $1 + 2 + \cdots + n = \frac{n(n+1)}{2
 ::::soln[Proof]
 For each natural number $n$, the statement we want to prove is $P_n$: “$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.” We proceed by induction on $n$. First we will prove that the base case $P_1$ is true. The statement $P_1$ reads $1 = \frac{1(1+1)}{2}$, which is true. Now, suppose that $P_n$ is true; in other words, suppose that $1 + 2 + \cdots + n = \frac{n(n+1)}{2}.$ Using this hypothesis, we want to prove the statement $P_{n+1}$. To achieve this, we add $n+1$ to both sides to obtain
 
-$$ \begin{aligned}1 + 2 + \cdots + n + (n+1) &= \frac{n(n+1)}{2} + n + 1 \\\\\frac{n(n+1) + 2(n+1)}{2} &= \frac{(n+1)((n+1)+1)}{2}.\end{aligned} $$
+:::math
+\begin{aligned}1 + 2 + \cdots + n + (n+1) &= \frac{n(n+1)}{2} + n + 1 \\\\\frac{n(n+1) + 2(n+1)}{2} &= \frac{(n+1)((n+1)+1)}{2}.\end{aligned}
+:::
 
 <!-- $$
 \begin{aligned}

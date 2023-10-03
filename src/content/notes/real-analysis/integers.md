@@ -34,25 +34,29 @@ A set of numbers $S$ S is said to satisfy the addition axioms if the following h
 
 :::
 
-:::stmt[Axiom 2.4 (Distributive axiom, DL)]
+::::stmt[Axiom 2.4 (Distributive axiom, DL)]
 A set of numbers $S$ is said to satisfy the distribution axiom if the following holds for all members $x$, $y$, and $z$ of $S.$
 
-$$ x(y + z) = xy + xz. $$
-
+:::math
+x(y + z) = xy + xz.
 :::
+
+::::
 
 The set $\Z$ is also equipped with an ordering which arises from the usual notion of inequality $<$. Let's take some time to spell out the pertinent definitions.
 
-:::stmt[Definition 2.5]
+::::stmt[Definition 2.5]
 Let $S$ be a set of numbers. An order on $S$ is a relation, denoted by $<$, with the following two properties:
 
 - Trichotomy: If $x$ and $y$ are numbers in $S$, then exactly one of these statements is true:
 
-$$ x < y, \qquad x + y, \qquad x > y.$$
+:::math
+ x < y, \qquad x + y, \qquad x > y.
+:::
 
 - Transitivity: If $x$, $y$, and $z$ are numbers of $S$ such that $x < y$ and $y < z$, then $x < z$.
 
-:::
+::::
 
 :::stmt[Theorem 2.6]
 

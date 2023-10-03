@@ -45,12 +45,15 @@ Let ${\sim}$ be an equivalence relation on a set $X$. We define the equivalence 
 
 For any person $x$ on the island of Sumatra, the set $\\{\text{people on Sumatra}\\}$ is the equivalence class $[x]$ of $x$.
 
-:::stmt[Lemma 3.10]
+::::stmt[Lemma 3.10]
 Let $X$ be the set of all ordered pairs of integers with the second entry being nonzero, i.e. $X=\{(a,b): a,b \in \Z \text{ and } b \neq 0 \}$. The relation ${\sim}$ on $X$ is defined so that $(a,b)\sim(c,d)$ if $ad=cb$ is an equivalence relation. If $a,b \in \Z$ and $b\neq 0$, the equivalence class of $(a,b)$ (relative to ${\sim}$) is
 
-$$ \\{ (c,d): c,d \in \Z, d \neq 0, (a,b) \sim (c,d) \\} = \\{ (c,d): (c,d) \in \Z, d\neq 0, ad = cb \\} $$
 
+:::math
+\\{ (c,d): c,d \in \Z, d \neq 0, (a,b) \sim (c,d) \\} = \\{ (c,d): (c,d) \in \Z, d\neq 0, ad = cb \\}
 :::
+
+::::
 
 :::stmt[Definition 3.12]
 Let $X$ be a set. A partition of $X$ is a grouping of the members of $X$ into nonempty subsets in such a way that each element of $X$ is in exactly one of the subsets.

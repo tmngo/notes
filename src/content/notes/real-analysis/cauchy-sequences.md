@@ -5,10 +5,13 @@ number: 6
 title: Cauchy sequences
 ---
 
-:::stmt[Definition 6.1]
-A Cauchy sequence of rational numbers is a sequence $()$ of rational numbers such that for every rational $\epsilon > 0$ there exists a positive integer $N_\epsilon$ such that
-$$ |a_m-a_n| < \epsilon \quad \text{whenever}\ m,n \geq N $$
+::::stmt[Definition 6.1]
+A Cauchy sequence of rational numbers is a sequence $(a_1, a_2, \dots)$ of rational numbers such that for every rational $\epsilon > 0$ there exists a positive integer $N_\epsilon$ such that
+
+:::math
+|a_m-a_n| < \epsilon \quad \text{whenever}\ m,n \geq N 
 :::
+::::
 
 :::stmt[Proposition 6.2]
 The sequence $(\frac1n)_{n\in N} = (\frac11, \frac12, \frac13, \frac14, \frac15, \dots)$ is a Cauchy sequence.

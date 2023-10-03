@@ -140,6 +140,38 @@ const { BASE_URL } = import.meta.env;
   $medium-breakpoint: $width-3 * $min-text-size;
   $large-breakpoint: $width-3 * $max-text-size;
 
+  @font-face {
+    font-family: fbb;
+    font-style: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    src: url("/notes/fonts/fbb-regular.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: fbb;
+    font-style: italic;
+    font-weight: normal;
+    font-stretch: normal;
+    src: url("/notes/fonts/fbb-italic.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: fbb;
+    font-style: normal;
+    font-weight: bold;
+    font-stretch: normal;
+    src: url("/notes/fonts/fbb-bold.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: fbb;
+    font-style: italic;
+    font-weight: bold;
+    font-stretch: normal;
+    src: url("/notes/fonts/fbb-bolditalic.woff2") format("woff2");
+  }
+
   html {
     box-sizing: border-box;
     background: none;

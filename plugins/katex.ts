@@ -140,7 +140,7 @@ export const rehypeKatex = (options: Options) => {
         ? element.properties?.className ?? []
         : [];
       // This class can be generated from markdown with ` ```math `.
-      console.log({ ...element, classes });
+      // console.log({ ...element, classes });
       const languageMath = classes.includes("language-math");
       // This class is used by `remark-math` for flow math (block, `$$\nmath\n$$`).
       const mathDisplay = classes.includes("math-display");
@@ -174,7 +174,6 @@ export const rehypeKatex = (options: Options) => {
         scope = parent;
         parent = parents[parents.length - 2];
         displayMode = true;
-        console.log({ scope });
       }
 
       /* c8 ignore next -- verbose to test. */

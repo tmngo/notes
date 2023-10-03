@@ -134,12 +134,11 @@ export const math = () => {
             }
           });
         }
-        console.log(child.children);
+        // console.log(child.children);
       });
 
-      console.log({ textChildren });
-
-      console.log({ h: h("div.language-math", [textChildren]) });
+      // console.log({ textChildren });
+      // console.log({ h: h("div.language-math", [textChildren]) });
 
       data.hChildren = [
         h("div.my-math", textChildren),
@@ -158,7 +157,7 @@ export const math = () => {
           ...h(tagName, node.attributes).properties,
         };
       }
-      console.log({ myNode: node, children: node.children });
+      // console.log({ myNode: node, children: node.children });
     });
   };
 };
